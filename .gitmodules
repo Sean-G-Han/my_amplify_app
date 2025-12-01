@@ -1,0 +1,4 @@
+[submodule "My-EasyUI-Template"]
+	path = My-EasyUI-Template
+	url = https://github.com/Sean-G-Han/My-EasyUI-Template.git
+	branch = library-only
