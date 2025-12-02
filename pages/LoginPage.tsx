@@ -7,6 +7,7 @@ import CUIButton from '../My-EasyUI-Template/CommonUI/CUITextButton'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../App'
 import { loginMiddleware } from '../middleware/auth'
+import { UserCred } from '../type/userCred'
 
 type User = {
     username: string;
@@ -35,7 +36,9 @@ const LoginPage: React.FC<Props> = ( navigation ) => {
             <CUITextField placeholder="Password" type='password' onChangeText={(text) => setUser({ ...user, password: text })} />
             <CUIButton text="Login" onPress={async () => {
                     let result = await loginMiddleware(user.username, user.password);
-                    console.log(result);
+                    if (result.success) {   
+                        navigation.navigation.replace('Home', { userCred: UserCred.fromSignInSession(result.value, user.username) });
+                    }
                 }} />
             <CUIButton text="No Account? (Register)" onPress={() => {
                     navigation.navigation.navigate('Register', { username: user.username }) 

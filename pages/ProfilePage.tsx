@@ -1,21 +1,21 @@
 import React from 'react';
 import MainLayout from './layout/MainLayout';
-import HomePageContent from './HomePageContent';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../App';
+import ProfilePageContent from './ProfilePageContent';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'Profile'>;
 
-const HomePage: React.FC<Props> = ({ route }) => {
+const ProfilePage: React.FC<Props> = ({ route }) => {
     if (!route.params) {
-        throw new Error("HomePage requires route parameters");
+        throw new Error("ProfilePage requires route parameters");
     }
     const { userCred } = route.params;
     return (
         <MainLayout userCred={userCred}>
-            <HomePageContent userCred={userCred}/>
+            <ProfilePageContent userCred={userCred}/>
         </MainLayout>
     );
 };
 
-export default HomePage;
+export default ProfilePage;

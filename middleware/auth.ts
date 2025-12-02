@@ -1,5 +1,7 @@
-import { confirmSignUp, fetchAuthSession, signIn, signUp } from 'aws-amplify/auth';
-import { Result } from './result';
+import { confirmSignUp, fetchAuthSession, signIn, signOut, signUp } from 'aws-amplify/auth';
+import { Result } from '../type/result';
+import { UserCred } from '../type/userCred';
+import { User } from 'aws-cdk-lib/aws-iam';
 
 export async function signUpMiddleware(username: string, password: string, confirmPassword: string): Promise<Result> {
     try {
@@ -30,6 +32,8 @@ export async function confirmSignUpMiddleware(username: string, code: string): P
 
 export async function loginMiddleware(username: string, password: string): Promise<Result> {
     try {
+        await signOut({ global: true });
+
         const result = await signIn({
             username,
             password,
@@ -49,8 +53,9 @@ export async function loginMiddleware(username: string, password: string): Promi
     catch (error: any) {
         if (error?.name === "UserAlreadyAuthenticatedException") {
             const session = await fetchAuthSession();
-            return { success: true, value: session };
-        }
+            const userCred: UserCred = UserCred.fromSignInSession(session, username);
+                return { success: true, value: userCred };
+        };
 
         if (error?.name === "UserNotFoundException") {
             return { success: false, value: new Error("User does not exist") };
@@ -68,5 +73,14 @@ export async function loginMiddleware(username: string, password: string): Promi
             success: false,
             value: error instanceof Error ? error : new Error(String(error))
         };
+    }
+}
+
+export async function logoutMiddleware(): Promise<Result> {
+    try {
+        await signOut({ global: true });
+        return { success: true, value: null };
+    } catch (error) {
+        return { success: false, value: error };
     }
 }
