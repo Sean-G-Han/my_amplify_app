@@ -1,6 +1,5 @@
 import { confirmSignUp, fetchAuthSession, signIn, signUp } from 'aws-amplify/auth';
-
-export type Result = { success: boolean; value: any }
+import { Result } from './result';
 
 export async function signUpMiddleware(username: string, password: string, confirmPassword: string): Promise<Result> {
     try {
@@ -11,7 +10,7 @@ export async function signUpMiddleware(username: string, password: string, confi
             username: username,
             password: password,
         });
-        return { success: true, value: nextStep };
+        return { success: true, value: nextStep.signUpStep };
     } catch (error) {
         return { success: false, value: error };
     }
@@ -19,11 +18,11 @@ export async function signUpMiddleware(username: string, password: string, confi
 
 export async function confirmSignUpMiddleware(username: string, code: string): Promise<Result> {
     try {
-        let result = await confirmSignUp({
+        const { nextStep } = await confirmSignUp({
             username: username,
             confirmationCode: code,
         });
-        return { success: true, value: result };
+        return { success: true, value: nextStep.signUpStep };
     } catch (error) {
         return { success: false, value: error };
     }

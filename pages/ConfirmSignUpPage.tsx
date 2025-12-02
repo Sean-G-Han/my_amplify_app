@@ -21,7 +21,7 @@ const ConfirmSignUpPage: React.FC<Props> = ( navigation ) => {
     const confirmSignUpBox = Rectangle.create({
         refCorner: 'center',
         rectCorners: [[root, 'center']],
-        size: { width: 400, height: 130 }
+        size: { width: 350, height: 130 }
     }, 'confirmSignUpBox')
     return (
         <CUIAbsoluteBox rect={confirmSignUpBox} padding={10} style={{ borderColor: 'black', borderWidth: 1, borderRadius: 10 }}>

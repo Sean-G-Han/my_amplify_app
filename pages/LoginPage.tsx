@@ -26,7 +26,7 @@ const LoginPage: React.FC<Props> = ( navigation ) => {
     const loginBox = Rectangle.create({
         refCorner: 'center',
         rectCorners: [[root, 'center']],
-        size: { width: 400, height: 250 }
+        size: { width: 350, height: 250 }
     }, 'loginBox')
 
     return (

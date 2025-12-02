@@ -24,21 +24,20 @@ const RegisterPage: React.FC<Props> = (navigation) => {
         size: { width: window.width, height: window.height }
     }, 'root')
 
-    const loginBox = Rectangle.create({
+    const registerBox = Rectangle.create({
         refCorner: 'center',
         rectCorners: [[root, 'center']],
-        size: { width: 400, height: 350 }
-    }, 'loginBox')
+        size: { width: 350, height: 320 }
+    }, 'registerBox')
 
     return (
-        <CUIAbsoluteBox rect={loginBox} padding={10} style={{ borderColor: 'black', borderWidth: 1, borderRadius: 10 }}>
+        <CUIAbsoluteBox rect={registerBox} padding={10} style={{ borderColor: 'black', borderWidth: 1, borderRadius: 10 }}>
             <CUITextField placeholder="Email" value={user.username} onChangeText={(text) => setUser({ ...user, username: text })} />
             <CUITextField placeholder="Password" type='password' onChangeText={(text) => setUser({ ...user, password: text })} />
             <CUITextField placeholder="Confirm Password" type='password' onChangeText={(text) => setUser({ ...user, confirmPassword: text })} />
             <CUIButton text="Register" onPress={async () => {
                 let result = await signUpMiddleware(user.username, user.password, user.confirmPassword);
-                console.log(result);
-                if (result.success && result.value.signUpStep === 'CONFIRM_SIGN_UP') {
+                if (result.success && result.value === 'CONFIRM_SIGN_UP') {
                     navigation.navigation.navigate('ConfirmSignUp', { username: user.username });
                 }
             }} />

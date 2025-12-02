@@ -5,6 +5,7 @@ import RegisterPage from './pages/RegisterPage';
 import { Amplify } from 'aws-amplify';
 import amplify_outputs from './amplify_outputs.json';
 import ConfirmSignUpPage from './pages/ConfirmSignUpPage';
+import HomePage from './pages/HomePage';
 
 Amplify.configure(amplify_outputs)
 
@@ -12,6 +13,7 @@ export type RootStackParamList = {
     Login: { username?: string };
     Register: { username?: string };
     ConfirmSignUp: { username?: string };
+    Home: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -23,6 +25,7 @@ export default function App() {
                 <Stack.Screen name="Login" component={LoginPage} />
                 <Stack.Screen name="Register" component={RegisterPage} />
                 <Stack.Screen name="ConfirmSignUp" component={ConfirmSignUpPage} />
+                <Stack.Screen name="Home" component={HomePage} />
             </Stack.Navigator>
         </NavigationContainer>
     );
